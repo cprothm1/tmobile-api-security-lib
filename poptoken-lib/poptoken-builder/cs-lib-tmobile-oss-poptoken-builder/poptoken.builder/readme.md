@@ -1,29 +1,31 @@
-﻿**Proof Of Possession (PoP) Token Builder 
-using .NET Core 3.1 and .NET Standard 2.0**
+# Proof Of Possession (PoP) Token Builder using .NET Core 3.1 and .NET Standard 2.0
 
-**Implementation Details**
+## Implementation Details
+
 The T-Mobile Proof Of Possession (PoP) Token Builder component creates JWS tokens using the following logic:
-•	Sets up the edts (external data to sign) and ehts (external headers to sign) claims in PoP token using the specified ehts key-value map. 
-•	The library uses SHA256 algorithm for calculating the edts 
-•	And then the final edts value is encoded using Base64 URL encoding.
-•	Signs the PoP token using the specified RSA private key.
-•	Creates the PoP token with 2 minutes of validity period.
-•	Current PoP token builder libraries support RSA PKCS8 format key for signing and validating the PoP tokens.
+- Sets up the `edts` (external data to sign) and `ehts` (external headers to sign) claims in PoP token using the specified `ehts` key-value map. 
+- The library uses SHA256 algorithm for calculating the `edts` 
+- And then the final `edts` value is encoded using Base64 URL encoding.
+- Signs the PoP token using the specified RSA private key.
+- Creates the PoP token with 2 minutes of validity period.
+- Current PoP token builder libraries support RSA PKCS8 format key for signing and validating the PoP tokens.
 
-**Determining the ehts Key Name**
-•	For HTTP request URI, "uri" should be used as ehts key name, PopEhtsKeyEnum.Uri.GetDescription().  
-•	For "uri" ehts value, the URI and query string of the request URL should be put in the ehts key-value map. Example: 
-•	If the URL is https://api.t-mobile.com/commerce/v1/orders?account-number=0000000000 then only /commerce/v1/orders?account-number=0000000000 should be used as ehts value. 
-•	The query parameter values part of "uri" ehts value should not be in URL encoded format.
-•	For HTTP method, "http-method" should be used as ehts key name, PopEhtsKeyEnum.HttpMethod.GetDescription().
-•	For HTTP request headers, the header name should be used as ehts key name.
-•	For HTTP request body, "body" should be used as ehts key name, PopEhtsKeyEnum.Body.GetDescription().
-•	For code sample, see test “PopTokenBuilder_Build_ValidPopToken_Success_Test”
+### Determining the ehts Key Name
+- For HTTP request URI, "uri" should be used as `ehts` key name, `PopEhtsKeyEnum.Uri.GetDescription()`.  
+- For "uri" `ehts` value, the URI and query string of the request URL should be put in the `ehts` key-value map. Example: 
+- If the URL is https://api.t-mobile.com/commerce/v1/orders?account-number=0000000000 then only `/commerce/v1/orders?account-number=0000000000` should be used as `ehts` value. 
+- The query parameter values part of "uri" `ehts` value should not be in URL encoded format.
+- For HTTP method, "http-method" should be used as `ehts` key name, `PopEhtsKeyEnum.HttpMethod.GetDescription()`.
+- For HTTP request headers, the header name should be used as `ehts` key name.
+- For HTTP request body, "body" should be used as `ehts` key name, `PopEhtsKeyEnum.Body.GetDescription()`.
+- For code sample, see test `PopTokenBuilder_Build_ValidPopToken_Success_Test`
 
-**Supported Key Format**
-The PoP token builder library currently supports *PKCS8* key format.
+### Supported Key Format
 
-**Using Non Encrypted Keys:**
+The PoP token builder library currently supports **PKCS8** key format.
+
+### Using Non Encrypted Keys
+
 Below commands shows how to create private and public keys in PKCS8 format:
 
     # Create a 2048 bit Private RSA key in PKCS1 format
@@ -41,7 +43,7 @@ Below commands shows how to create private and public keys in PKCS8 format:
      # Via code:  https://gist.github.com/misaxi/4642030
 
 
-Example:
+### Example
 The following Unit Test shows how to build the PoP token using private key PEM XML string.
 
     [TestClass]
